@@ -13,6 +13,7 @@ export default class CartItem extends Component {
           <button>{this.props.product.qty}</button>
           <button onClick={() => this.props.onRemove(this.props.product)}>-</button>
         </div>
+        <footer> <h4>Total: {this.props.total}</h4></footer>
       </div>
     );
   }

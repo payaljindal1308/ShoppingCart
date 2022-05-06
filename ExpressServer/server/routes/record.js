@@ -57,40 +57,54 @@ router.route('/orders').get(async (req, res) => {
 });
 
 
-// router.route('/cartItems').get(async (req, res) => {
-//     const dbConnect = dbObject.getDb();
-//     dbConnect
-//     .collection('Cart').find({}).limit(50)
-//     .toArray((err, result) => {
-//         if(err){
-//             res.status(400).send("Error fetching items");
-//         }
-//         else{
-//             res.json(result);
-//         }
-//     });
-// });
+router.route('/cart').get(async (req, res) => {
+    const dbConnect = dbObject.getDb();
+    dbConnect
+    .collection('Cart').find({}).limit(50)
+    .toArray((err, result) => {
+        if(err){
+            res.status(400).send("Error fetching items");
+        }
+        else{
+            res.json(result);
+        }
+    });
+});
 
 
-// router.route('/addtocart').post(async (req, res) => {
-//     const dbConnect = dbObject.getDb();
-//     const order = {
-//         order_id: req.orderId,
-//         items: req.items
-//     }
-//     dbConnect
-//     .collection('Cart')
-//     .insertOne(order, async (err, response) => {
-//         if(err){
-//             res.send({code: 400, reason: err})
-//         }
-//         else{
-//             console.log("Added an item in the  cart")
-//             console.log(order)
-//         }
-//     })
-// });
+router.route('/addtocart').post(async (req, res) => {
+    const dbConnect = dbObject.getDb();
+    const cartItems = {
+        items: req.body.items,
+        total: req.body.total
+    }
+    dbConnect
+    .collection('Cart')
+    .insertOne(cartItems, async (err, response) => {
+        if(err){
+            res.send({code: 400, reason: err})
+        }
+        else{
+            console.log("Added an item in the  cart")
+            console.log(cartItems)
+        }
+    })
+});
 
+
+router.route('/deletecart').post(async (req, res) => {
+    const dbConnect = dbObject.getDb();
+    dbConnect
+    .collection('Cart')
+    .remove({}, async (err, response) => {
+        if(err){
+            res.send({code: 400, reason: err})
+        }
+        else{
+            console.log("Deleted Cart items")
+        }
+    })
+});
 
 
 module.exports = router;

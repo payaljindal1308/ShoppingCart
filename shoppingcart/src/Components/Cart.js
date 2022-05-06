@@ -5,33 +5,36 @@ import CartItem from "./cartItem";
 import { Component } from "react";
 export class Cart extends Component {
 
+  constructor(){
+    super()
+    this.state = {
+      cart: []
+    }
+  }
+ 
+  componentDidMount = () => {
+    fetch('http://localhost:3001/cart')
+     .then(resp => resp.json())
+     .then(data => {
+       this.setState({cart: data})
+       console.log(this.state.cart)
+     })
+     .catch(err => console.log({code: 400, reason:err}))
+    }
 
-  // const addToOrders = () => {
-  //   fetch('http://localhost:3001/addorders', {
-  //     method: 'POST',
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       items: cartItems
-  //     })
-  //   }).then(() => {
-  //     props.cartItems = []
-  //     props.total = 0
-  //   })
-  // }
   render() {
 
-    if (this.props.cartItems.length) {
-      console.log("Cart Items are:" + this.props.cartItems.length)
+    if (this.state.cart) {
       return (
         <div>
           <div className="Products">
             {
-              this.props.cartItems.map((product) => (
-                <CartItem key={product.id} product={product} onAdd={this.props.onAdd} onRemove={this.props.onRemove}></CartItem>
+              this.state.cart.map((product) => (
+                <CartItem key={product._id} product={product.items} onAdd={this.props.onAdd} onRemove={this.props.onRemove} total={product.total}></CartItem>
               ))}
           </div>
-          <footer> <h4>Total: {this.props.total}</h4>
-            <Link to="/orders"><button className="Order" onClick={this.props.addToOrders}>Place Order</button></Link></footer>
+           
+            <Link to="/orders"><button className="Order" onClick={this.props.addToOrders}>Place Order</button></Link>
         </div>
       );
     }
