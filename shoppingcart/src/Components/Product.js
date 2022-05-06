@@ -2,8 +2,7 @@ import React from 'react';
 import '../Styles/Products.css'
 import { Link } from 'react-router-dom';
 export default function Product(props) {
-  const { product, onAdd } = props;
-
+  const { product, onAdd, isAdded } = props;
   return (
     <div className='itemwrapper'>
       <div><img className="logo" src={'https://i.pinimg.com/564x/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.jpg'} alt={product.name} />

@@ -1,16 +1,15 @@
 import React from 'react';
 import '../Styles/Orders.css'
 import OrderItem from './OrderItem';
-export default function Product(props) {
-  const { orderid, order} = props;
-  console.log(order)
+export default function Order(props) {
+  const { id, order, total } = props;
   return (
         <div className="Orders">
-        <header>Order ID: {orderid}</header>
-          {order[0].map( (product, index) => (
+        <h2>Order ID: {id}</h2>
+          {order.map( (product, index) => (
             <OrderItem key={index} product={product}></OrderItem>
           ))}
-          <footer>Total: {order[1]}</footer>
+          <footer>Total: {total}</footer>
         </div>
     )
 }

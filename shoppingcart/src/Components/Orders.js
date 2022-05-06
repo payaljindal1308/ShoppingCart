@@ -1,19 +1,38 @@
-import {React, Component} from "react"
+import {React} from "react"
+import { Component } from "react";
 import '../Styles/Orders.css'
-import { Link } from "react-router-dom"
 import Order from './Order.js';
 
-export function Orders(props) {
-  const { orders } = props;
-  console.log(orders)
-  console.log(Object.keys(orders))
+
+export class Orders extends Component {
+
+ constructor(){
+   super()
+   this.state = {
+     orders: []
+   }
+ }
+
+  componentDidMount = () => {
+    fetch('http://localhost:3001/orders')
+     .then(resp => resp.json())
+     .then(data => {
+       this.setState({orders: data})
+       console.log(this.state.orders);
+     })
+     .catch(err => console.log({code: 400, reason:err}))
+    }
+
+  
+  render(){
+    console.log(this.state.orders)
   return (
       <div className="Products">
-        {Object.keys(orders).map((orderid,index) => (
-          <Order key={index} orderid={Object.keys(orders)[index]} order= {orders[orderid]}></Order>
+        {this.state.orders.map((order, index) => (
+          <Order key={index} id={order._id} order= {order.items} total={order.total}></Order>
         ))}
       </div>
   );
 }
 
-
+}
