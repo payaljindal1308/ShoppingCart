@@ -1,18 +1,20 @@
 import {React, Component} from "react"
 import '../Styles/Products.css'
-import { Link } from "react-router-dom"
+
 
 import Product from './Product.js';
 
-export function Products(props) {
-  const { products, onAdd, isAdded} = props;
+export class Products extends Component {
+  
+render(){
   return (
-      <div className="Products">
-        {products.map((product) => (
-          <Product key={product.id} product={product} onAdd={onAdd} isAdded={isAdded}></Product>
-        ))}
-      </div>
-  );
+    <div className="Products">
+      {this.props.products.map((product) => (
+        <Product key={product.id} product={product} onAdd={this.props.onAdd}></Product>
+      ))}
+    </div>
+);
+}
 }
 
 

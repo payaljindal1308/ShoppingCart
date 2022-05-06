@@ -108,7 +108,7 @@ class App extends Component {
     <NavBar></NavBar>
     <img src="https://kindkones.com/wp-content/uploads/2019/03/IMG_0111-1200x353.jpg" alt="icecreamimage"></img>
     <Routes>
-      <Route path="/" element={<Products products={this.state.items} onAdd={this.onAddToCart} isAdded={this.state.isAdded}/>}></Route>
+      <Route path="/" element={<Products products={this.state.items} onAdd={this.onAddToCart}/>}></Route>
       <Route path='/cart' element={<Cart cartItems={this.state.cartItems} onAdd={this.onAdd} onRemove={this.onRemove} total={this.state.total} addToOrders={this.addToOrders}/>}></Route>
       <Route path='/orders' element={<Orders/>}></Route>
       {this.state.items.map(item => (
