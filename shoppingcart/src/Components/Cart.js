@@ -24,7 +24,7 @@ export class Cart extends Component {
 
   render() {
 
-    if (this.state.cart) {
+    if (this.state.cart.length) {
       return (
         <div>
           <div className="Products">
@@ -33,7 +33,7 @@ export class Cart extends Component {
                 <CartItem key={product._id} product={product.items} onAdd={this.props.onAdd} onRemove={this.props.onRemove} total={product.total}></CartItem>
               ))}
           </div>
-           
+            <footer> <h4>Total: {this.props.total}</h4></footer>
             <Link to="/orders"><button className="Order" onClick={this.props.addToOrders}>Place Order</button></Link>
         </div>
       );
