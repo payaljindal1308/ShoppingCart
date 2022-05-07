@@ -92,6 +92,25 @@ router.route('/addtocart').post(async (req, res) => {
 });
 
 
+router.route('/updatecart').post(async (req, res) => {
+    const dbConnect = dbObject.getDb();
+    const newRecord = {
+        id: req.body.items.id,
+        qty: req.body.items.qty,
+        price: req.body.items.price
+    }
+    dbConnect
+    .collection('Cart')
+    .replaceOne({id: req.body.items.id}, newRecord, async (err, response) => {
+        if(err){
+            res.send({code: 400, reason: err})
+        }
+        else{
+            console.log("Updated Cart items")
+        }
+    })
+});
+
 router.route('/deletecart').post(async (req, res) => {
     const dbConnect = dbObject.getDb();
     dbConnect
