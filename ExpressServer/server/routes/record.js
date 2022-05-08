@@ -75,8 +75,10 @@ router.route('/cart').get(async (req, res) => {
 router.route('/addtocart').post(async (req, res) => {
     const dbConnect = dbObject.getDb();
     const cartItems = {
-        items: req.body.items,
-        total: req.body.total
+        id: req.body.id,
+        name: req.body.name,
+        qty: req.body.qty,
+        price: req.body.price,
     }
     dbConnect
     .collection('Cart')
@@ -94,14 +96,17 @@ router.route('/addtocart').post(async (req, res) => {
 
 router.route('/updatecart').post(async (req, res) => {
     const dbConnect = dbObject.getDb();
-    const newRecord = {
-        id: req.body.items.id,
-        qty: req.body.items.qty,
-        price: req.body.items.price
-    }
+    const productid = {id: req.body.id};
+    const updates = {
+        $inc: {
+          qty: 1,
+          price: req.body.price
+        },
+      };
+    console.log(updates)
     dbConnect
     .collection('Cart')
-    .replaceOne({id: req.body.items.id}, newRecord, async (err, response) => {
+    .updateOne(productid, updates, async (err, response) => {
         if(err){
             res.send({code: 400, reason: err})
         }
@@ -111,6 +116,28 @@ router.route('/updatecart').post(async (req, res) => {
     })
 });
 
+router.route('/removefromcart').post(async (req, res) => {
+    const dbConnect = dbObject.getDb();
+    const productid = {id: req.body.id};
+    const updates = {
+        $inc: {
+          qty: -1,
+          price: -req.body.price
+        },
+      };
+    console.log(updates)
+    dbConnect
+    .collection('Cart')
+    .updateOne(productid, updates, async (err, response) => {
+        if(err){
+            res.send({code: 400, reason: err})
+        }
+        else{
+            console.log("Decremented Cart items")
+        }
+    })
+});
+ 
 router.route('/deletecart').post(async (req, res) => {
     const dbConnect = dbObject.getDb();
     dbConnect

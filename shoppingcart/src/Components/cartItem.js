@@ -1,11 +1,13 @@
 import React from 'react';
 import { Component } from 'react';
+import { MyContext } from '../MyContextClass';
 import '../Styles/Products.css'
 export default class CartItem extends Component {
  
   render(){
     return (
-      <div className='itemwrapper'>
+      
+        <div className='itemwrapper'>
         <div>{this.props.product.name}</div>
         <div>Rs.{this.props.product.price}</div>
         <div>
@@ -14,6 +16,9 @@ export default class CartItem extends Component {
           <button onClick={() => this.props.onRemove(this.props.product)}>-</button>
         </div>
       </div>
+
+    
+      
     );
   }
 }
