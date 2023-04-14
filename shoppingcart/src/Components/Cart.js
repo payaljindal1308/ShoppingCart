@@ -2,9 +2,9 @@ import { React } from "react"
 import '../Styles/Products.css'
 import { Link } from "react-router-dom"
 import CartItem from "./cartItem";
-export function Cart(props) {
+import { Component } from "react";
+export class Cart extends Component {
 
-  const { cartItems, onAdd, onRemove, total, addToOrders } = props;
 
   // const addToOrders = () => {
   //   fetch('http://localhost:3001/addorders', {
@@ -18,25 +18,27 @@ export function Cart(props) {
   //     props.total = 0
   //   })
   // }
+  render() {
 
-  if (cartItems.length) {
-    console.log("Cart Items are:" + cartItems.length)
-    return (
-      <div>
-        <div className="Products">
-          {
-            cartItems.map((product) => (
-              <CartItem key={product.id} product={product} onAdd={onAdd} onRemove={onRemove}></CartItem>
-            ))}
+    if (this.props.cartItems.length) {
+      console.log("Cart Items are:" + this.props.cartItems.length)
+      return (
+        <div>
+          <div className="Products">
+            {
+              this.props.cartItems.map((product) => (
+                <CartItem key={product.id} product={product} onAdd={this.props.onAdd} onRemove={this.props.onRemove}></CartItem>
+              ))}
+          </div>
+          <footer> <h4>Total: {this.props.total}</h4>
+            <Link to="/orders"><button className="Order" onClick={this.props.addToOrders}>Place Order</button></Link></footer>
         </div>
-        <footer> <h4>Total: {total}</h4>
-          <Link to="/orders"><button className="Order" onClick={addToOrders}>Place Order</button></Link></footer>
-      </div>
-    );
-  }
-  else {
-    return (
-      <h2>Cart is Empty!!</h2>
-    )
+      );
+    }
+    else {
+      return (
+        <h2>Cart is Empty!!</h2>
+      )
+    }
   }
 }
